@@ -9,7 +9,6 @@ PORT = 52100
 
 
 define docker_run_flags
---publish ${PORT}:9200 \
 --volume ${DATA}:/data \
 --volume ${CONFIG}:/elasticsearch/config/elasticsearch.yml
 endef
@@ -18,6 +17,10 @@ endef
 .PHONY: test
 test:
 	docker run --rm -it $(docker_run_flags) $(IMAGE) bash
+
+.PHONY: build
+build:
+	docker build --tag $(IMAGE) .
 
 .PHONY: run
 run:
