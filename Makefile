@@ -4,7 +4,7 @@ IMAGE = dockerfile/elasticsearch:latest
 # Sample: ELASTICSEARCH_DOCKER_DATA=/luo/var/elasticsearch make run
 ELASTICSEARCH_DOCKER_DATA ?= /data/elasticsearch
 BSDIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-CONFIG = $(BSDIR)/elasticsearch.yml
+CONFIG = $(BSDIR)/etc/elasticsearch.yml
 
 
 define docker_run_flags
