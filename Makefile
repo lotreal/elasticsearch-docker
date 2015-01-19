@@ -14,13 +14,23 @@ define docker_run_flags
 endef
 
 
+.PHONY: build
+build:
+	docker build --tag $(IMAGE) .
+
+.PHONY: pull
+pull:
+	docker pull $(IMAGE)
+
+.PHONY: push
+push:
+	docker push $(IMAGE)
+
+
 .PHONY: test
 test:
 	docker run --rm -it $(docker_run_flags) $(IMAGE) bash
 
-.PHONY: build
-build:
-	docker build --tag $(IMAGE) .
 
 .PHONY: run
 run:
