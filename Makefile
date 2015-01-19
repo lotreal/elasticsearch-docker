@@ -29,3 +29,7 @@ run:
 .PHONY: shell
 shell:
 	docker exec -it $(NAME) bash
+
+.PHONY: ip
+ip:
+	docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(NAME)
