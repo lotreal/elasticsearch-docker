@@ -5,7 +5,6 @@ IMAGE = dockerfile/elasticsearch:latest
 ELASTICSEARCH_DOCKER_DATA ?= /data/elasticsearch
 BSDIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 CONFIG = $(BSDIR)/elasticsearch.yml
-PORT = 52100
 
 
 define docker_run_flags
