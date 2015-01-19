@@ -1,15 +1,15 @@
 NAME = es
 IMAGE = dockerfile/elasticsearch:latest
 
-# Sample: DATA=/luo/var/elasticsearch make run
-DATA ?= /data/elasticsearch
+# Sample: ELASTICSEARCH_DOCKER_DATA=/luo/var/elasticsearch make run
+ELASTICSEARCH_DOCKER_DATA ?= /data/elasticsearch
 BSDIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 CONFIG = $(BSDIR)/elasticsearch.yml
 PORT = 52100
 
 
 define docker_run_flags
---volume ${DATA}:/data \
+--volume ${ELASTICSEARCH_DOCKER_DATA}:/data \
 --volume ${CONFIG}:/elasticsearch/config/elasticsearch.yml
 endef
 
@@ -26,11 +26,13 @@ pull:
 push:
 	docker push $(IMAGE)
 
-
 .PHONY: test
 test:
 	docker run --rm -it $(docker_run_flags) $(IMAGE) bash
 
+.PHONY: clean
+clean:
+	docker rm -f $(NAME)
 
 .PHONY: run
 run:
@@ -40,6 +42,6 @@ run:
 shell:
 	docker exec -it $(NAME) bash
 
-.PHONY: ip
-ip:
-	docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(NAME)
+.PHONY: curl
+curl:
+	curl `docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(NAME)`:9200/_search
